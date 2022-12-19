@@ -51,10 +51,11 @@ from sqlalchemy import or_
 from sqlalchemy import tuple_
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.orm import Query
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.orm.session import Session
 from sqlalchemy_utils import database_exists, create_database
+
 
 from thoth.python import PackageVersion
 from thoth.python import Pipfile
@@ -300,6 +301,7 @@ class GraphDatabase(SQLBase):
         try:
             self._engine = create_engine(self.construct_connection_string(), echo=echo)
             self._sessionmaker = sessionmaker(bind=self._engine)
+            Base.query = scoped_session(self._sessionmaker).query_property()
         except Exception as engine_exc:
             _LOGGER.warning("Failed to create engine: %s", str(engine_exc))
             # Drop engine and session in case of any connection issues so is_connected behaves correctly.

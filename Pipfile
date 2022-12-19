@@ -16,8 +16,11 @@ psycopg2-binary = "*"
 sqlalchemy-utils = "*"
 alembic = "*"
 thoth-ssdeep = "*"
-packaging = "*"
+packaging = "==21.3"
 thoth-license-solver = ">=0.1.4"
+flask-graphql = "*"
+graphene-sqlalchemy = "*"
+aiodataloader = "*"
 
 [dev-packages]
 pytest = "*"
@@ -36,3 +39,6 @@ types-all = "*"
 
 [requires]
 python_version = "3.8"
+
+[pipenv]
+allow_prereleases = false
